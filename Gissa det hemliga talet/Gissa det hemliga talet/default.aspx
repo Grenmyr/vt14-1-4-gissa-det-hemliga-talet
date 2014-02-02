@@ -8,12 +8,15 @@
 </head>
 <body>
     <h1>Gissa det hemliga talet</h1>
-    <form id="form1" runat="server" DefaultButton="SubmitButton">
+    <form id="form1" runat="server" defaultbutton="SubmitButton">
         <div>
-            <asp:Panel ID="SubmitPanel" runat="server" GroupingText="Ange tal mellan 1 - 100" >
+            <%-- panel för styra presentation av det innanför panelen--%>
+            <asp:Panel ID="SubmitPanel" runat="server" GroupingText="Ange tal mellan 1 - 100">
                 <asp:ValidationSummary ID="ValidationSummary" runat="server" />
-                <asp:TextBox ID="TextBox" runat="server" ></asp:TextBox>
-                <asp:Button ID="SubmitButton" runat="server" Text="Skicka" OnClick="SubmitButton_Click" />
+                <asp:PlaceHolder ID="SubmitPlaceHolder" runat="server">
+                    <asp:TextBox ID="TextBox" runat="server"></asp:TextBox>
+                    <asp:Button ID="SubmitButton" runat="server" Text="Skicka" OnClick="SubmitButton_Click" />
+                </asp:PlaceHolder>
                 <asp:Label ID="Guesses" runat="server" Text="Make your guesses"></asp:Label>
                 <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="Fyll i gissning" ControlToValidate="TextBox" Text="*"></asp:RequiredFieldValidator>
                 <asp:RangeValidator ID="RangeValidator1" runat="server" ErrorMessage="Talet måste vara mellan 1-100" ControlToValidate="TextBox" MaximumValue="100" MinimumValue="1" Type="String" Text="*"></asp:RangeValidator>
