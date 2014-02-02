@@ -11,6 +11,11 @@ namespace Gissa_det_hemliga_talet
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            TextBox.Focus();
+        }
+
+        protected void SubmitButton_Click(object sender, EventArgs e)
+        {
 
         }
     }
