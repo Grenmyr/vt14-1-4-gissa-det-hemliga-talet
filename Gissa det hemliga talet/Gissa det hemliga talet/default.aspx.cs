@@ -21,7 +21,7 @@ namespace Gissa_det_hemliga_talet
 
             }
             else { 
-            
+            SubmitPanel
             }
 
         }
