@@ -16,6 +16,13 @@ namespace Gissa_det_hemliga_talet
 
         protected void SubmitButton_Click(object sender, EventArgs e)
         {
+            if (IsValid)
+            {
+
+            }
+            else { 
+            
+            }
 
         }
     }
