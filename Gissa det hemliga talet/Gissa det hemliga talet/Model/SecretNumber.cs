@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 using System.Web;
 
@@ -15,24 +16,37 @@ namespace Gissa_det_hemliga_talet.Model
         PreviousGuess
 
     }
-    public class SecretNumber
+    public class SecretNumber: IEnumerable
     {
+        // Privata fält
         public const int MaxNumberOfGuesses = 7;
 
+        // Här ska mina gissningar sparas efterhand.
         private List<int> _previousGuesses;
-        private int _number;
+        // Innehåller det hemliga talet
+        private int _number ;
 
-        public bool CanMakeGuess { get; }
-        public int Count { get; }
-        public int? Number { get; }
-        public Outcome Outcome { get; set; }
-        public IEnumerable<int> PreviousGuesses {get;}
-        
+        // Egenskaper
 
+        // Egenskap som skapar "gömt" fält count som trots ej deklarerat fungerar räkna upp ifrån konstruktorn. Har getter som retunerar true eller false.
+        public bool CanMakeGuess
+        {
+            get { return Count < MaxNumberOfGuesses; }
+        }
+        protected int Count { get; private set; }
+        public int? Number { get { return _number; } }
+        public Outcome Outcome { get;  private set; }
 
-        // konstruktor
+        // Ska användas för hämta tidigare gissningar. som har sparats i listan
+        public IEnumerable<int> PreviousGuesses 
+        {
+            get { return _previousGuesses; }
+        }
+
+        // Konstruktor
         public SecretNumber()
         {
+            _previousGuesses = new List<int>(MaxNumberOfGuesses);
             Initialize();
         }
 
@@ -42,7 +56,7 @@ namespace Gissa_det_hemliga_talet.Model
             // Initialiserar _random till en inbyggd metod av formen random, dvs skapar hemliga numret.
             Random _random = new Random();
             _number = _random.Next(1, 101);
-
+            Count++;
         }
 
         // Metod av typen Outcome
@@ -51,9 +65,9 @@ namespace Gissa_det_hemliga_talet.Model
             return Outcome.Correct;
         }
 
-
-
-
-
+        public IEnumerator GetEnumerator()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
