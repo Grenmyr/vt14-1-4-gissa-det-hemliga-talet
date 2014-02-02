@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="default.aspx.cs" Inherits="Gissa_det_hemliga_talet._default" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="default.aspx.cs" Inherits="Gissa_det_hemliga_talet._default" ViewStateMode="disabled " %>
 
 <!DOCTYPE html>
 
