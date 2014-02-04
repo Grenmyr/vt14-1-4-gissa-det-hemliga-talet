@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Collections;
 using System.Linq;
 using System.Web;
@@ -38,9 +39,9 @@ namespace Gissa_det_hemliga_talet.Model
         public Outcome Outcome { get;  private set; }
 
         // Ska användas för hämta tidigare gissningar. som har sparats i listan
-        public IEnumerable<int> PreviousGuesses 
+        public ReadOnlyCollection<int> PreviousGuesses 
         {
-            get { return _previousGuesses; }
+            get { return new ReadOnlyCollection<int>(_previousGuesses); }
         }
 
         // Konstruktor
