@@ -34,12 +34,7 @@ namespace Gissa_det_hemliga_talet.Model
         {
             get
             {
-                if (Count == MaxNumberOfGuesses)
-                {
-                    return false;
-
-                }
-                return true;
+                return Count < MaxNumberOfGuesses && Outcome != Model.Outcome.Correct;
             }
 
         }

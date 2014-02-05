@@ -13,14 +13,9 @@ namespace Gissa_det_hemliga_talet
 
         public SecretNumber SecretNumber
         {
-            get
-            {
-                return Session["secretNumber"] as SecretNumber;
-            }
-            set
-            {
-                Session["secretNumber"] = value;
-            }
+            // Ett sätt att skriva på shorthanded.etunera den as Secretnumber om null till vänster. Skapa ny session av typ Secretnumber.
+            get { return Session["secretNumber"] as SecretNumber ?? (SecretNumber)(Session["secretNumber"] = new SecretNumber()); }
+
         }
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -29,13 +24,8 @@ namespace Gissa_det_hemliga_talet
 
         protected void SubmitButton_Click(object sender, EventArgs e)
         {
-           
             if (IsValid)
             {
-                if (SecretNumber == null)
-                {
-                    SecretNumber = new SecretNumber();
-                }
                 var guess = int.Parse(TextBox.Text);
                 switch (SecretNumber.MakeGuess(guess))
                 {
