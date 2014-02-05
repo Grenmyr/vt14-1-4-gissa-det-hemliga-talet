@@ -1,2 +1,13 @@
 ﻿body {
+    width: 800px;
+    border: 2px solid;
+    margin-left: 50px;
+    text-align: center;
+    border-radius: 5px;
+}
+#ValidationSummary {
+    color:red;
+}
+h1 {
+    background-color: lightgray;
 }

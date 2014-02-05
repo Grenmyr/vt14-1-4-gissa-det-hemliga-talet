@@ -17,7 +17,7 @@ namespace Gissa_det_hemliga_talet.Model
         PreviousGuess
 
     }
-    public class SecretNumber : IEnumerable
+    public class SecretNumber
     {
         // Privata fält
         public const int MaxNumberOfGuesses = 7;
@@ -34,21 +34,24 @@ namespace Gissa_det_hemliga_talet.Model
         {
             get
             {
-                if (Count < MaxNumberOfGuesses)
+                if (Count == MaxNumberOfGuesses)
                 {
-                    return true;
+                    return false;
+
                 }
-                return false;
+                return true;
             }
 
         }
-        private int Count
+        // Räknar mot min lista hur många gissningar jag gjort.
+        public int Count
         {
             get
             {
-                return PreviousGuesses.Count;
+                return _previousGuesses.Count;
             }
         }
+        // Retunerar null om jag kan gissa, annars retunerar den det hemliga numret.
         public int? Number
         {
             get
@@ -63,12 +66,13 @@ namespace Gissa_det_hemliga_talet.Model
                 }
             }
         }
+        //  Autoimplementerande egenskap som jag är osäker på hur den fungerar.
         public Outcome Outcome { get; private set; }
 
         // Ska användas för hämta tidigare gissningar. som har sparats i listan
-        public ReadOnlyCollection<int> PreviousGuesses
+        public IEnumerable<int> PreviousGuesses
         {
-            get { return new ReadOnlyCollection<int>(_previousGuesses); }
+            get { return _previousGuesses.AsReadOnly(); }
         }
 
         // Konstruktor
@@ -82,51 +86,45 @@ namespace Gissa_det_hemliga_talet.Model
         public void Initialize()
         {
             _previousGuesses.Clear();
-            
-            // Initialiserar _random till en inbyggd metod av formen random, dvs skapar hemliga numret.
-            Random _random = new Random();
-            _number = _random.Next(1, 101);
-
+            Random random = new Random();
+            _number = random.Next(1, 101);
             Outcome = Outcome.Indefinite;
-            
         }
 
         // Metod av typen Outcome
         public Outcome MakeGuess(int guess)
         {
-
+            // Första 3 if satserna används för kontrollera att det är giltig gissning.
             if (guess < 1 || guess > 100)
             {
                 throw new ArgumentOutOfRangeException();
             }
-
-            if (CanMakeGuess == false)
-            {
-                return Outcome.NoMoreGuesses;
-            }
             // Eftersom en Lissta så kan jag använda inbyggda metoden Contains för jämföra om någon gissar samma nummer igen.
             if (PreviousGuesses.Contains(guess))
             {
-                return Outcome.PreviousGuess;
+                Outcome = Outcome.PreviousGuess;
             }
-            else if (guess < _number)
+            if (CanMakeGuess == false)
             {
-                return Outcome.Low;
-            }
-            else if (guess < _number)
-            {
-                return Outcome.High;
+                Outcome = Outcome.NoMoreGuesses;
             }
             else
             {
-                return Outcome.Correct;
+                _previousGuesses.Add(guess);
+                if (guess < _number)
+                {
+                    Outcome = Outcome.Low;
+                }
+                else if (guess > _number)
+                {
+                    Outcome = Outcome.High;
+                }
+                else
+                {
+                    Outcome = Outcome.Correct;
+                }
             }
-
-        }
-
-        public IEnumerator GetEnumerator()
-        {
-            throw new NotImplementedException();
+            return Outcome;
         }
     }
 }

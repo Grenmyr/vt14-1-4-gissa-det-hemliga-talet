@@ -67,13 +67,31 @@ namespace Gissa_det_hemliga_talet {
         protected global::System.Web.UI.WebControls.Button SubmitButton;
         
         /// <summary>
-        /// Guesses control.
+        /// Guess control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Guesses;
+        protected global::System.Web.UI.WebControls.Label Guess;
+        
+        /// <summary>
+        /// Panel1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel Panel1;
+        
+        /// <summary>
+        /// PreviousGuesses control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label PreviousGuesses;
         
         /// <summary>
         /// RequiredFieldValidator1 control.

@@ -24,7 +24,7 @@ namespace Gissa_det_hemliga_talet
         }
         protected void Page_Load(object sender, EventArgs e)
         {
-            TextBox.Focus();
+            TextBox.Focus();     
         }
 
         protected void SubmitButton_Click(object sender, EventArgs e)
@@ -42,27 +42,34 @@ namespace Gissa_det_hemliga_talet
                     case Outcome.Indefinite:
                         break;
                     case Outcome.Low:
-                        Guesses.Text = "För lågt";
+                        Guess.Text = "För lågt!";
                         break;
                     case Outcome.High:
-                        Guesses.Text = "För högt";
+                        Guess.Text = "För högt!";
                         break;
                     case Outcome.Correct:
-                        Guesses.Text = "Du gissade rätt!";
+                        Guess.Text = String.Format("Du gissade rätt! Det tog {0} försök.", SecretNumber.Count);
+                        SubmitPanel.Enabled = false;
+                        ResetButton.Visible = true;
                         break;
                     case Outcome.NoMoreGuesses:
-                        Guesses.Text = "Du har sluit på gissningar";
+                        Guess.Text = String.Format("Du har sluit på gissningar. Det hemliga talet var {0}", SecretNumber.Number);
+                        SubmitPanel.Enabled = false;
+                        ResetButton.Visible = true;
                         break;
                     case Outcome.PreviousGuess:
-                        Guesses.Text = "Du har redan gissat " + guess;
+                        Guess.Text = String.Format("Du har redan gissat {0}.", guess);
                         break;
                     default:
                         break;
                 }
-                
+                PreviousGuesses.Text = String.Join(" ", SecretNumber.PreviousGuesses);                
             }
-            
+        }
 
+        protected void ResetButton_Click(object sender, EventArgs e)
+        { 
+            SecretNumber.Initialize();
         }
     }
 }
