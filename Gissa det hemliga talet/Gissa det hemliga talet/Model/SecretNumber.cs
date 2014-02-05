@@ -57,7 +57,8 @@ namespace Gissa_det_hemliga_talet.Model
                 {
                     return null;
                 }
-                else {
+                else
+                {
                     return _number;
                 }
             }
@@ -80,22 +81,19 @@ namespace Gissa_det_hemliga_talet.Model
         // Metod som _count och _random används i.
         public void Initialize()
         {
+            _previousGuesses.Clear();
+            
             // Initialiserar _random till en inbyggd metod av formen random, dvs skapar hemliga numret.
             Random _random = new Random();
             _number = _random.Next(1, 101);
 
+            Outcome = Outcome.Indefinite;
         }
 
         // Metod av typen Outcome
         public Outcome MakeGuess(int guess)
         {
-            for (int i = 0; i < _previousGuesses.Count; i++)
-            {
-               if(guess == _previousGuesses[i]) 
-                {
-                    return Outcome.PreviousGuess;
-                }
-            }
+
             if (guess < 1 || guess < 100)
             {
                 throw new ArgumentOutOfRangeException();
@@ -104,6 +102,11 @@ namespace Gissa_det_hemliga_talet.Model
             if (CanMakeGuess == false)
             {
                 return Outcome.NoMoreGuesses;
+            }
+            // Eftersom en Lissta så kan jag använda inbyggda metoden Contains för jämföra om någon gissar samma nummer igen.
+            if (PreviousGuesses.Contains(guess))
+            {
+                return Outcome.PreviousGuess;
             }
             else if (guess < _number)
             {
