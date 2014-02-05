@@ -17,7 +17,7 @@ namespace Gissa_det_hemliga_talet.Model
         PreviousGuess
 
     }
-    public class SecretNumber: IEnumerable
+    public class SecretNumber : IEnumerable
     {
         // Privata fält
         public const int MaxNumberOfGuesses = 7;
@@ -25,21 +25,47 @@ namespace Gissa_det_hemliga_talet.Model
         // Här ska mina gissningar sparas efterhand.
         private List<int> _previousGuesses;
         // Innehåller det hemliga talet
-        private int _number ;
+        private int _number;
 
         // Egenskaper
 
         // Egenskap som skapar "gömt" fält count som trots ej deklarerat fungerar räkna upp ifrån konstruktorn. Har getter som retunerar true eller false.
         public bool CanMakeGuess
         {
-            get { return Count < MaxNumberOfGuesses; }
+            get
+            {
+                if (Count < MaxNumberOfGuesses)
+                {
+                    return true;
+                }
+                return false;
+            }
+
         }
-        protected int Count { get; private set; }
-        public int? Number { get { return _number; } }
-        public Outcome Outcome { get;  private set; }
+        private int Count
+        {
+            get
+            {
+                return PreviousGuesses.Count;
+            }
+        }
+        public int? Number
+        {
+            get
+            {
+                if (CanMakeGuess)
+                {
+                    return null;
+                }
+                else {
+                    return _number;
+                }
+            }
+        }
+        public Outcome Outcome { get; private set; }
 
         // Ska användas för hämta tidigare gissningar. som har sparats i listan
-        public ReadOnlyCollection<int> PreviousGuesses 
+        public ReadOnlyCollection<int> PreviousGuesses
         {
             get { return new ReadOnlyCollection<int>(_previousGuesses); }
         }
@@ -57,13 +83,41 @@ namespace Gissa_det_hemliga_talet.Model
             // Initialiserar _random till en inbyggd metod av formen random, dvs skapar hemliga numret.
             Random _random = new Random();
             _number = _random.Next(1, 101);
-            Count++;
+
         }
 
         // Metod av typen Outcome
         public Outcome MakeGuess(int guess)
         {
-            return Outcome.Correct;
+            for (int i = 0; i < _previousGuesses.Count; i++)
+            {
+               if(guess == _previousGuesses[i]) 
+                {
+                    return Outcome.PreviousGuess;
+                }
+            }
+            if (guess < 1 || guess < 100)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+
+            if (CanMakeGuess == false)
+            {
+                return Outcome.NoMoreGuesses;
+            }
+            else if (guess < _number)
+            {
+                return Outcome.Low;
+            }
+            else if (guess < _number)
+            {
+                return Outcome.High;
+            }
+            else
+            {
+                return Outcome.Correct;
+            }
+
         }
 
         public IEnumerator GetEnumerator()
