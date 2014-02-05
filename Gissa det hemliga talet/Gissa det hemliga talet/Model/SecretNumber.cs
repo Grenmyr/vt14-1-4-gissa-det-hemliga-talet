@@ -88,13 +88,14 @@ namespace Gissa_det_hemliga_talet.Model
             _number = _random.Next(1, 101);
 
             Outcome = Outcome.Indefinite;
+            
         }
 
         // Metod av typen Outcome
         public Outcome MakeGuess(int guess)
         {
 
-            if (guess < 1 || guess < 100)
+            if (guess < 1 || guess > 100)
             {
                 throw new ArgumentOutOfRangeException();
             }

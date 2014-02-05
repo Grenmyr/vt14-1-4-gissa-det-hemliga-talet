@@ -36,8 +36,8 @@ namespace Gissa_det_hemliga_talet
                 {
                     SecretNumber = new SecretNumber();
                 }
-                var guess = TextBox.Text;             
-                switch (SecretNumber.Outcome)
+                var guess = int.Parse(TextBox.Text);
+                switch (SecretNumber.MakeGuess(guess))
                 {
                     case Outcome.Indefinite:
                         break;
